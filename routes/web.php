@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,16 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth'])->group( function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    });
+Route::middleware(['auth'])->group(function () {
     
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->middleware(['auth'])->name('dashboard');
+    Route::get('/', [ClientController::class, 'index'])->name('dashboard');
+
+    Route::controller(ClientController::class)->group(function () {
+        Route::get('clients-export', 'export')->name('clients.export');
+        Route::post('clients-import', 'import')->name('clients.import');
+    });
 });
 
-
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
