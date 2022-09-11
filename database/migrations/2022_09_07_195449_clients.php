@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->integer('rut');
+            $table->integer('rut')->unique();
             $table->string('name', 50);
-            $table->string('last_name', 50);
-            $table->string('second_last_name', 50);
+            $table->string('last_name', 50)->nullable();
+            $table->string('second_last_name', 50)->nullable();
+            $table->boolean('is_active')->default('1');
             $table->timestamps();
             $table->softDeletes();
         });
