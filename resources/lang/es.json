@@ -32,5 +32,9 @@
     "All rights reserved.":  "Todos los derechos reservados.",
     "Log in": "Iniciar sesión",
     "Dashboard" : "Principal",
-    "There was an error on row :row. :message": "Hubo un error en la fila :row. :message"
+    "There was an error on row :row. :message": "Hubo un error en la fila :row. :message",
+    "Showing" :"Mostrando del",
+    "to" :"al",
+    "of" :"de",
+    "results" :"Resultados"
 }

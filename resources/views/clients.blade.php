@@ -4,47 +4,59 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-    <div class="container">
-        <div class="card mt-3 mb-3">
-            <div class="card-header text-center">
-                <h4>Cargar o descargar archivo excel o csv con clientes falabella</h4>
-            </div>
-            <div class="card-body">
+
+    <div class="container mx-auto">
+        <div
+            class="mt-3 block full-width bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-5">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Cargar archivo excel o
+                    csv con clientes falabella</h5>
+                <p class="text-gray-900 dark:text-white">Aquí debes cargar el archivo que contiene todos los clientes
+                    que se desea mostrar en el webservice.</p>
                 @include('flash-message')
                 <form action="{{ route('clients.import') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="mb-3">
-                        <input class="block w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
-                        id="large_size" type="file" name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">Solo archivos xls, xlsx o csv (maximo peso 2mb).</p>
+                    <div class="mb-3 mt-3">
+                        <input
+                            class="block text-lg text-gray-200 rounded-lg border border-gray-300 cursor-pointer focus:outline-none dark:border-gray-600 dark:placeholder-gray-400"
+                            id="large_size" type="file" name="file"
+                            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-200" id="file_input_help">Solo archivos xls,
+                            xlsx o csv (maximo peso 2mb).</p>
                     </div>
-                    <button class="btn btn-primary">Cargar Clientes</button>
+                    <button type="submit"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        Cargar Clientes</button>
                 </form>
-
-                <table class="table table-bordered mt-3">
-                    <tr>
-                        <th>ID</th>
-                        <th>Rut</th>
-                        <th>Nombre</th>
-                        <th>Apellido Paterno</th>
-                        <th>Apellido Materno</th>
-                    </tr>
-                    @foreach($clients as $client)
-                    <tr>
-                        <td>{{ $client->id }}</td>
-                        <td>{{ $client->rut }}</td>
-                        <td>{{ $client->name }}</td>
-                        <td>{{ $client->last_name }}</td>
-                        <td>{{ $client->second_last_name }}</td>
-                    </tr>
-                    @endforeach
-                </table>
-                <div>
-                    <a class="btn btn-danger mt-2" href="{{ route('clients.export') }}">Descargar Clientes</a>
-                </div>
-
             </div>
         </div>
-    </div>
+        <div
+            class="mt-2 block full-width bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-5">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Lista de clientes
+                    falabella</h5>
+                <p class="text-gray-900 dark:text-white">Aquí se muestran todos los clientes activos los cuales se
+                    exponen para consumir en el webservice.</p>
+            </div>
+            @livewire('client-pagination')
+            @livewireScripts
+        </div>
+        <div
+            class="mt-2 block full-width bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-5">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Descargar lista de
+                    clientes falabella</h5>
+                <p class="text-gray-900 dark:text-white">Aquí puedes descagar la lista completa de los clientes
+                    falabellas activos.</p>
 
+                <div class="mb-3 mt-4">
+                    <a class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        href="{{ route('clients.export') }}">Descargar Clientes</a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script src="{{ asset('js\clients.js')}}"></script>
 </x-app-layout>
