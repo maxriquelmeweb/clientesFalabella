@@ -7,32 +7,21 @@
     <div class="container">
         <div class="card mt-3 mb-3">
             <div class="card-header text-center">
-                <h4>Laravel 9 Import Export Excel & CSV File to Database</h4>
+                <h4>Cargar o descargar archivo excel o csv con clientes falabella</h4>
             </div>
             <div class="card-body">
-                @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
+                @include('flash-message')
                 <form action="{{ route('clients.import') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="file" name="file" class="form-control">
-                    <br>
-                    <button class="btn btn-primary">Importar Clientes</button>
+                    <div class="mb-3">
+                        <input class="block w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
+                        id="large_size" type="file" name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">Solo archivos xls, xlsx o csv (maximo peso 2mb).</p>
+                    </div>
+                    <button class="btn btn-primary">Cargar Clientes</button>
                 </form>
 
                 <table class="table table-bordered mt-3">
-                    <tr>
-                        <th colspan="3">
-                            Lista de clientes
-                            <a class="btn btn-danger float-end" href="{{ route('clients.export') }}">Exporta lista</a>
-                        </th>
-                    </tr>
                     <tr>
                         <th>ID</th>
                         <th>Rut</th>
@@ -50,6 +39,9 @@
                     </tr>
                     @endforeach
                 </table>
+                <div>
+                    <a class="btn btn-danger mt-2" href="{{ route('clients.export') }}">Descargar Clientes</a>
+                </div>
 
             </div>
         </div>
