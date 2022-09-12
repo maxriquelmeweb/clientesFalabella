@@ -15,9 +15,15 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::get();
-
-        return view('clients', compact('clients'));
+        $query = Client::join('debts', 'clients.id', '=', 'debts.client_id')
+            ->join('wallets', 'wallets.id', '=', 'debts.wallet_id')
+            ->where('clients.is_active', 1)
+            ->select('clients.id', 'clients.rut', 'clients.name as client_name', 'clients.last_name', 'clients.second_last_name', 'debts.debt', 'debts.digits', 'wallets.name as wallet_name')
+            ->orderby('clients.id');
+        $clients = $query->paginate(10);
+        return view('clients', [
+            'clients' => $clients,
+        ]);
     }
 
     /**
@@ -33,9 +39,12 @@ class ClientController extends Controller
      */
     public function import(ImportPostRequest $request)
     {
-        //desactivamos todos los clientes, para poder dejar activos los actuales que importamos
-        Client::where('is_active', 1)->update(['is_active' => 0]);
+        $_SESSION['import'] = 0;
         Excel::import(new ClientsImport, $request->file);
-        return back()->with('success', 'Carga exitosa.');
+        if ($_SESSION['import'] === 0) {
+            return back()->with('error', 'Error al cargar archivo invalido.');
+        } else {
+            return back()->with('success', 'Carga exitosa.');
+        }
     }
 }
