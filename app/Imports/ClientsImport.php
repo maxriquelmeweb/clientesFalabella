@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Illuminate\Support\Facades\Log;
+ini_set('max_execution_time', 300);//60 es 1 minutos 300 es 5 minutos
 
 class ClientsImport implements ToModel, SkipsEmptyRows, WithHeadingRow, WithValidation
 {

@@ -19,7 +19,7 @@
                     <div class="mb-3 mt-3">
                         <input
                             class="block text-lg text-gray-200 rounded-lg border border-gray-300 cursor-pointer focus:outline-none dark:border-gray-600 dark:placeholder-gray-400"
-                            id="large_size" type="file" name="file"
+                            id="large_size" type="file" name="file" onclick="cleanAllMessage()"
                             accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <p class="mt-1 text-sm text-gray-500 dark:text-gray-200" id="file_input_help">Solo archivos xls,
                             xlsx o csv (maximo peso 2mb).</p>
@@ -58,5 +58,19 @@
 
         </div>
     </div>
-    <script src="{{ asset('js\clients.js')}}"></script>
+    @section('page-script')
+    <script type="text/javascript">
+        function hiddenMessage(id){
+        element = document.getElementById(id);
+        element.classList.add("hidden");
+        }
+        function cleanAllMessage(){
+            for(let i=1; i<=3; i++){
+                element = document.getElementById('alert-'+i);
+                if(element)
+                element.classList.add("hidden");
+            }
+        }
+    </script>
+    @stop
 </x-app-layout>
