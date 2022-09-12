@@ -16,6 +16,6 @@ class Client extends Model
     //Relacion uno a muchos cliente tiene muchas deudas
     public function debts()
     {
-        return $this->hasMany(Debt::class);
+        return $this->hasMany('App\Models\Debt');
     }
 }

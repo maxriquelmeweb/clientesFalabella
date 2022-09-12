@@ -15,12 +15,12 @@ class Debt extends Model
     //Relacion uno a muchos inversa varias deudas tiene un cliente
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo('App\Models\Client');
     }
 
     //Relacion uno a muchos inversa varias deudas tiene una cartera
     public function wallet()
     {
-        return $this->belongsTo(Wallet::class);
+        return $this->belongsTo('App\Models\Wallet');
     }
 }
