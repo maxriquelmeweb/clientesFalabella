@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Exports\ClientsExport;
 use App\Imports\ClientsImport;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Models\Client;
 use App\Http\Requests\ImportPostRequest;
 
 class ClientController extends Controller
@@ -15,15 +14,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $query = Client::join('debts', 'clients.id', '=', 'debts.client_id')
-            ->join('wallets', 'wallets.id', '=', 'debts.wallet_id')
-            ->where('clients.is_active', 1)
-            ->select('clients.id', 'clients.rut', 'clients.name as client_name', 'clients.last_name', 'clients.second_last_name', 'debts.debt', 'debts.digits', 'wallets.name as wallet_name')
-            ->orderby('clients.id');
-        $clients = $query->paginate(10);
-        return view('clients', [
-            'clients' => $clients,
-        ]);
+        return view('clients');
     }
 
     /**

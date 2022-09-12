@@ -29,6 +29,6 @@
                 {{ $slot }}
             </main>
         </div>
+        @yield('page-script')
     </body>
-    <script></script>
 </html>
