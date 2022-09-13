@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->integer('debt');
             $table->mediumInteger('digits')->nullable();
+            $table->date('expiration')->nullable();
             $table->foreignId('client_id')->references('id')->on('clients')->onDelete('cascade');
             $table->foreignId('wallet_id')->references('id')->on('wallets')->onDelete('cascade');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

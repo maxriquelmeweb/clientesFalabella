@@ -9,10 +9,14 @@ use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Illuminate\Support\Facades\Log;
-ini_set('max_execution_time', 300);//60 es 1 minutos 300 es 5 minutos
+use Carbon\Carbon;
 
-class ClientsImport implements ToModel, SkipsEmptyRows, WithHeadingRow, WithValidation
+ini_set('max_execution_time', 3600);
+ini_set('memory_limit', '2048M');
+
+class ClientsImport implements ToModel, SkipsEmptyRows, WithHeadingRow, WithValidation, WithChunkReading
 {
     use Importable;
     /**
@@ -23,38 +27,38 @@ class ClientsImport implements ToModel, SkipsEmptyRows, WithHeadingRow, WithVali
     public function model(array $row)
     {
         try {
-            if ($_SESSION['import'] === 0) {
-                Client::where('is_active', 1)->update(['is_active' => 0]);
-                $_SESSION['import'] = 1;
-            }
-            //buscamos el cliente eliminado o existente, luego lo actualizamos o creamos
-            $client = Client::withTrashed()->updateOrCreate(
-                ['rut'     => $row['rut']],
+            //buscamos el cliente luego lo actualizamos o creamos
+            $client = Client::updateOrCreate(
+                ['rut' => $row['rut']],
                 [
-                    'rut'     => $row['rut'],
-                    'name'     => $row['nombre'],
-                    'last_name'     => $row['apellido1'],
-                    'second_last_name'     => $row['apellido2'],
-                    'is_active' => 1,
-                    'deleted_at' => null
+                    'rut'  => $row['rut'],
+                    'name'  => $row['nombre'],
+                    'last_name'  => $row['apellido1'],
+                    'second_last_name'  => $row['apellido2'],
                 ]
             );
             $walletId = $row['cartera'] == "cmr Falabella" ? 1 : 2;
             //actualizamos su deuda o la creamos
-            Debt::withTrashed()->updateOrCreate(
+            Debt::updateOrCreate(
                 ['client_id'     => $client->id, 'wallet_id' => $walletId],
                 [
-                    'debt'     => $row['monto_deuda'],
+                    'debt' => $row['monto_deuda'],
                     'digits' => $row['4digitos'],
-                    'client_id'     => $client->id,
-                    'wallet_id'     => $walletId,
-                    'deleted_at' => null
+                    'expiration' => Carbon::parse($row['vencimiento'])->format('Y/m/d'),
+                    'client_id' => $client->id,
+                    'wallet_id' => $walletId,
                 ]
             );
             return $client;
         } catch (\Throwable $th) {
             Log::error($th);
+            return back()->with('error', 'Error leyendo archivo');
         }
+    }
+
+    public function chunkSize(): int
+    {
+        return 1000;
     }
 
     public function rules(): array
@@ -96,6 +100,10 @@ class ClientsImport implements ToModel, SkipsEmptyRows, WithHeadingRow, WithVali
                 'required',
                 'string',
                 'in:cmr Falabella,Banco Falabella'
+            ],
+            'vencimiento' => [
+                'nullable',
+                'date_format:d-m-Y'
             ]
         ];
     }

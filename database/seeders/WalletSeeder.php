@@ -18,13 +18,11 @@ class WalletSeeder extends Seeder
         Wallet::create(
             [
                 'name' => "cmr Falabella",
-                'deleted_at' => null
             ],
         );
         Wallet::create(
             [
                 'name' => "Banco Falabella",
-                'deleted_at' => null
             ],
         );
     }
