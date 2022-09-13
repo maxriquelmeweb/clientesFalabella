@@ -18,20 +18,38 @@ class ClientController extends Controller
     public function obtenerDatosCliente(Request $request)
     {
         $rut = $request->rut;
-        $client = Client::where('rut','=', $rut)->first();
-        
-        if ($client->count()) {
-            $debts = $client->debts;
+        $client = Client::where('rut', $rut)->first();
+
+        if ($client) {
             $walletsArray = [];
+            $debts = $client->debts;
 
             foreach ($debts as $debt) {
-                $walletsArray[] = $debt->wallet;
+                $aux = [];
+                if ($debt->wallet->name == 'Banco Falabella') {
+                    $aux = [
+                        "origen" => $debt->wallet->name,
+                        "deuda" => ($debt->debt != 0),
+                        "monto_deuda" => $debt->debt,
+                        "4digitos" => $debt->digits,
+                        "Vencimiento" => "".date('d/m/Y', strtotime($debt->expiration))
+                    ];
+                } else {
+                    $aux = [
+                        "origen" => $debt->wallet->name,
+                        "deuda" => ($debt->debt != 0),
+                        "monto_deuda" => $debt->debt,
+                        "vencimiento" => "".date('d/m/Y', strtotime($debt->expiration))
+                    ];
+                }
+                $walletsArray[] = $aux;
             }
+
             $result = [
-                "Nombre" => $client->name,
-                "Apellido1" => $client->last_name,
-                "Apellido2" => $client->second_last_name,
-                "Deuda" => $debts,
+                "nombre" => $client->name,
+                "apellido1" => $client->last_name,
+                "apellido2" => $client->second_last_name,
+                "carteras" => $walletsArray,
             ];
 
             return response()->json([
@@ -43,10 +61,9 @@ class ClientController extends Controller
         } else {
             return response()->json([
                 'status' => 'Success',
-                'message' => 'No existen datos del cliente',
+                'message' => 'No existe el cliente',
                 'code' => 200,
-                'count' => 0,
-                'data' => 0
+                'data' => false
             ]);
         }
     }

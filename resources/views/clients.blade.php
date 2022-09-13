@@ -1,13 +1,13 @@
 <x-app-layout>
-    <x-slot name="header">
+{{--     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
         </h2>
-    </x-slot>
+    </x-slot> --}}
 
-    <div class="container mx-auto">
+    <div class="container mx-auto p-5">
         <div
-            class="mt-3 block full-width bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            class="block full-width bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
             <div class="p-5">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Cargar archivo csv con
                     clientes falabella</h5>
