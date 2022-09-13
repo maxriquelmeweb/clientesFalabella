@@ -31,7 +31,6 @@ class ClientController extends Controller
                         "origen" => $debt->wallet->name,
                         "deuda" => ($debt->debt != 0),
                         "monto_deuda" => $debt->debt,
-                        "4digitos" => $debt->digits,
                         "Vencimiento" => "".date('d/m/Y', strtotime($debt->expiration))
                     ];
                 } else {
@@ -39,6 +38,7 @@ class ClientController extends Controller
                         "origen" => $debt->wallet->name,
                         "deuda" => ($debt->debt != 0),
                         "monto_deuda" => $debt->debt,
+                        "4digitos" => $debt->digits,
                         "vencimiento" => "".date('d/m/Y', strtotime($debt->expiration))
                     ];
                 }
