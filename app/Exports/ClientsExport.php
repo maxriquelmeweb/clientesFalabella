@@ -17,8 +17,7 @@ class ClientsExport implements FromCollection, WithHeadings
         try {
             $clients = Client::join('debts', 'clients.id', '=', 'debts.client_id')
                 ->join('wallets', 'wallets.id', '=', 'debts.wallet_id')
-                ->where('clients.is_active',1)
-                ->select('clients.rut', 'clients.name as client_name', 'clients.last_name', 'clients.second_last_name', 'debts.debt', 'wallets.name as wallet_name', 'debts.digits')
+                ->select('clients.rut', 'clients.name as client_name', 'clients.last_name', 'clients.second_last_name', 'debts.debt', 'wallets.name as wallet_name', 'debts.digits',  'debts.expiration')
                 ->orderby('clients.id')->get();
             return $clients;
         } catch (\Throwable $th) {
@@ -32,6 +31,6 @@ class ClientsExport implements FromCollection, WithHeadings
      */
     public function headings(): array
     {
-        return ["Rut", "Nombre", "Apellido1", "Apellido2", "monto deuda", "cartera", "4digitos"];
+        return ["Rut", "Nombre", "Apellido1", "Apellido2", "monto deuda", "cartera", "4digitos", "vencimiento"];
     }
 }
