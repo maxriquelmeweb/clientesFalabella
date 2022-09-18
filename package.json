@@ -13,7 +13,7 @@
     "laravel-vite-plugin": "^0.5.0",
     "lodash": "^4.17.19",
     "postcss": "^8.4.6",
-    "tailwindcss": "^3.1.0",
+    "tailwindcss": "^3.1.8",
     "vite": "^3.0.0"
   },
   "name": "clientesfalabella",
@@ -24,6 +24,8 @@
     "test": "tests"
   },
   "dependencies": {
+    "@types/node": "^18.7.18",
+    "@types/react": "^18.0.20",
     "acorn": "^7.4.1",
     "acorn-node": "^1.8.2",
     "acorn-walk": "^7.2.0",
@@ -53,8 +55,8 @@
     "fill-range": "^7.0.1",
     "follow-redirects": "^1.15.1",
     "form-data": "^4.0.0",
-    "function-bind": "^1.1.1",
     "fraction.js": "^4.2.0",
+    "function-bind": "^1.1.1",
     "glob-parent": "^6.0.2",
     "has": "^1.0.3",
     "is-binary-path": "^2.1.0",
@@ -92,14 +94,15 @@
     "reusify": "^1.0.4",
     "rollup": "^2.77.3",
     "run-parallel": "^1.2.0",
-    "supports-preserve-symlinks-flag": "^1.0.0",
     "source-map-js": "^1.0.2",
+    "supports-preserve-symlinks-flag": "^1.0.0",
     "to-regex-range": "^5.0.1",
+    "typescript": "^4.8.3",
+    "update-browserslist-db": "^1.0.5",
     "util-deprecate": "^1.0.2",
     "vite-plugin-full-reload": "^1.0.4",
     "xtend": "^4.0.2",
-    "yaml": "^1.10.2",
-    "update-browserslist-db": "^1.0.5"
+    "yaml": "^1.10.2"
   },
   "repository": {
     "type": "git",
