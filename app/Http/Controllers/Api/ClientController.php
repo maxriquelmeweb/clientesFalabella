@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\Wallet;
 use App\Models\Debt;
 use Illuminate\Http\Request;
+use App\Http\Requests\ClientsDataRequest;
 
 class ClientController extends Controller
 {
@@ -15,7 +16,7 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function obtenerDatosCliente(Request $request)
+    public function obtenerDatosCliente(ClientsDataRequest $request)
     {
         $rut = $request->rut;
         $client = Client::where('rut', $rut)->first();
