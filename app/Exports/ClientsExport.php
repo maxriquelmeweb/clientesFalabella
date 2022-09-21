@@ -7,6 +7,9 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Illuminate\Support\Facades\Log;
 
+ini_set('max_execution_time', 3600);
+ini_set('memory_limit', '2048M');
+
 class ClientsExport implements FromCollection, WithHeadings
 {
     /**
