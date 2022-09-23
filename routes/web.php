@@ -17,6 +17,7 @@ use App\Http\Controllers\ClientController;
 Route::middleware(['auth'])->group(function () {
     Route::controller(ClientController::class)->group(function () {
         Route::get('/','index')->name('dashboard');
+        Route::get('dashboard','index')->name('home');
         Route::get('clients-export', 'export')->name('clients.export');
         Route::post('clients-import', 'import')->name('clients.import');
         Route::post('destroy-clients', 'destroyAll')->name('clients.destroy');

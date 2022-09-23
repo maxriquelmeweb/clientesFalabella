@@ -47,6 +47,14 @@ class ClientController extends Controller
      */
     public function import(ImportPostRequest $request)
     {
+        if(!mb_check_encoding(file_get_contents($request->file), 'UTF-8'))
+        return back()->with('error', 'El csv debe estar codificado en UTF-8 revise manual');
+        $rows = count(file($request->file));
+        if($rows<2)
+        return back()->with('error', 'El csv debe contener al menos 2 filas');
+        if($rows>150000)
+        return back()->with('error', 'El csv no puede contener mas de 150000 filas');
+       
         Excel::import(new ClientsImport, $request->file);
         return back()->with('success', 'Carga exitosa');
     }
