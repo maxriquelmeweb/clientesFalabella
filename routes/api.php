@@ -21,5 +21,5 @@ use App\Http\Controllers\Api\ClientController;
 
 Route::group(["middleware" => "apikey.validate"], function () {
     //Rutas
-    Route::get("obtenerDatosCliente", [ClientController::class, "obtenerDatosCliente"]);
+    Route::post("obtenerDatosCliente", [ClientController::class, "obtenerDatosCliente"]);
 });
