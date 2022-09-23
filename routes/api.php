@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ClientController;
 
@@ -15,11 +14,7 @@ use App\Http\Controllers\Api\ClientController;
 |
 */
 
-/* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-}); */
-
 Route::group(["middleware" => "apikey.validate"], function () {
-    //Rutas
+    //Ruta para obtener cliente con sus datos
     Route::post("obtenerDatosCliente", [ClientController::class, "obtenerDatosCliente"]);
 });

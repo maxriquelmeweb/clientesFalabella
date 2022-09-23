@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
-use App\Models\Wallet;
-use App\Models\Debt;
-use Illuminate\Http\Request;
 use App\Http\Requests\ClientsDataRequest;
 
 class ClientController extends Controller
